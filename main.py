@@ -9,13 +9,16 @@ while (menu != '0'):
     menu = int(input('Escolha a opção desejada: '))
 
     if (menu == 1):
-        print('\nNessa tela voce realizará seu cadastro')
+        print('\nNessa tela voce realizará seu cadastro\n')
+        user = input('Digite seu login: ')
+        print(user)
+
 
     elif (menu == 2):
         print('\nInforme seu usuário e senha')
 
     elif (menu == 99):
-        print('\nCrie seu usário SuperAdmin\n')
+        print('\nCrie seu usário SuperAdmin')
 
     elif (menu == 0):
         print('\nObrigado por usar nosso sistema!')
