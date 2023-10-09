@@ -1,8 +1,8 @@
-menu = int('00')
+
 user = []
 adm = []
 
-while (menu != '0'):
+while True:
     print('1 - Cadastrar Usuário')
     print('2 - Login')
     print('0 - Sair')
@@ -10,8 +10,8 @@ while (menu != '0'):
 
     if (menu == 1):
         print('\nNessa tela voce realizará seu cadastro\n')
-        user = input('Digite seu login: ')
-        print(user)
+        login = input('Digite seu login: ')
+        user.append(login)
 
 
     elif (menu == 2):
