@@ -101,7 +101,7 @@ def escrever_materia(usuario):
             'titulo': titulo,
             'conteudo': conteudo,
             'data': data_materia,
-            'autor': usuario['email']  # Adiciona o email do autor
+            'autor': usuario['nome']  # Adiciona o email do autor
         }
         # Incrementa o contador de IDs para a próxima matéria
         id_materia += 1
