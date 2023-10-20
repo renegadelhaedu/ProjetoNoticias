@@ -1,3 +1,5 @@
+from art import *
+
 # Cria um dicionário vazio para armazenar os usuários
 usuarios = {}
 
@@ -189,7 +191,7 @@ def editar_materia():
             else:
                 print('Apenas os autores tem permissão para fazer edições')
             return
-            print(f'Editando matéria com ID {id_a_editar}.')
+            print(f'\nEditando matéria com ID {id_a_editar}.')
             novo_titulo = input('Digite o novo título: ')
             novo_conteudo = input('Digite o novo conteúdo: ')
             nova_data = input('Digite a nova data (no formato DD/MM/AAAA): ')
@@ -319,6 +321,7 @@ def listar_noticias(materias):
 
 def menu_leitor(usuario_logado):
     while True:
+
         print("-" * 30)  # linha superior
         print('|          Opções:           |')
         print("-" * 30)  # linha inferior
@@ -346,6 +349,7 @@ def main():
     global usuario_logado
 
     while True:
+        tprint("Catolica News","cybermedium")
         print("-" * 30)  # linha superior
         print('|          Opções:           |')
         print("-" * 30)  # cabecalho
