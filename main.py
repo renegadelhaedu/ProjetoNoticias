@@ -1,7 +1,7 @@
 from art import *
 
 # Cria um dicionário vazio para armazenar os usuários
-usuarios = {}
+usuarios_cadastrados = []
 
 # Cria uma lista vazia para armazenar as matérias
 materias = []
@@ -15,6 +15,16 @@ TIPO_LEITOR = "leitor"
 
 usuario_logado = None
 
+
+def cadastrar_novo_usuario(novo_usuario):
+
+    for usuario in usuarios_cadastrados:
+        if (usuario['email'] == novo_usuario['email']):
+            print('email existente')
+            return
+
+    usuarios_cadastrados.append(novo_usuario)
+    print('email cadastrado')
 
 def cadastrar():
     # Solicita informações do usuário
@@ -31,7 +41,7 @@ def cadastrar():
     # Solicita o email do usuário e realiza a verificação
     while True:
         email = input('Email: ')
-        if '@' in email and email.endswith('.com') and email not in usuarios:
+        if '@' in email and email.endswith('.com') and email not in usuarios_cadastrados:
             break
         elif '@' not in email:
             print('Email deve conter o caractere @. Tente novamente')
@@ -77,7 +87,7 @@ def cadastrar():
             print("Opção inválida. Tente novamente.")
 
     # Cria um novo usuário com as informações fornecidas
-    usuario = {
+    novo_usuario = {
         'nome': nome,
         'email': email,
         'senha': senha,
@@ -85,9 +95,7 @@ def cadastrar():
         'curtidas': []  # Inicialmente vazio
     }
 
-    # Adiciona o usuário ao dicionário de usuários
-    usuarios[email] = usuario
-    print('Usuário cadastrado com sucesso')
+    cadastrar_novo_usuario(novo_usuario)
 
 def escrever_materia(usuario):
     global id_materia
