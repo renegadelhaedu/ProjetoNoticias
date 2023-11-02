@@ -1,29 +1,10 @@
-cadastro_user = []
+from datetime import date
+data_atual = date.today()
+data_materia = '{}/{}/{}'.format(data_atual.day, data_atual.month,data_atual.year)
 
-while (True):
-    print('1 - Cadastrar Usuário')
-    print('2 - Login')
-    print('0 - Sair')
-    menu = int(input('Escolha a opção desejada: '))
+print(data_materia)
 
-    if (menu == 1):
-        print('\nNessa tela voce realizará seu cadastro\n')
-        login = input('Digite seu login: ')
-        senha = input('Digite uma senha: ')
-        cadastro_user.append([login, senha])
-
-
-
-
-    if (menu == 2):
-
-        login_auth = input('Login: ')
-        senha_auth = input('Senha: ')
-
-        logar = [login_auth, senha_auth]
-
-        for user in cadastro_user:
-            if(user == logar):
-                print('Logado')
-            else:
-                print('usuáio não cadastrado')
+for usuario in usuarios_cadastrados:
+    if (usuario['email'] == email and usuario['senha'] == senha):
+        print('Logado')
+        usuario_logado.append(usuario)
