@@ -4,7 +4,6 @@ import geral
 import jornalista
 import leitor
 
-id_materia = 1
 usuario_logado = []
 
 while True:
