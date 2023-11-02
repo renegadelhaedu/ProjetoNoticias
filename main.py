@@ -6,6 +6,8 @@ import leitor
 
 usuario_logado = []
 
+print('ldkflasdflasjdlfkjask')
+
 while True:
     tprint("Catolica News","cybermedium")
 
