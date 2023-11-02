@@ -1,15 +1,25 @@
-from art import *
+
 from datetime import date
 import geral
 import jornalista
 import leitor
 
+usuarios_cadastrados = [{
+        'nome': 'r',
+        'email': 'r@gmail.com',
+        'senha': 'r123456',
+        'tipo': 'jornalista',
+        'curtidas': []
+    }]
+
+idmateria = [0]
+materias = []
+
 usuario_logado = []
 
-print('ldkflasdflasjdlfkjask')
+print()
 
 while True:
-    tprint("Catolica News","cybermedium")
 
     print("-" * 30)
     print('|          Opções:           |')
@@ -25,7 +35,7 @@ while True:
         geral.cadastrar()
 
     elif (opcao == '2'):
-        geral.fazer_login(usuarios_cadastrados, materias)
+        geral.fazer_login(usuarios_cadastrados, materias, idmateria)
 
     elif (opcao == '3'):
         print("Saindo do programa.")

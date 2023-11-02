@@ -1,12 +1,12 @@
 from datetime import date
 from geral import *
 
-id_materia = 1
+
 
 data_atual = date.today()
-materias = []
 
-def menu_jornalista(usuario, materias):
+
+def menu_jornalista(emailusuario, materias, idmateria):
     while True:
         print("-" * 30)
         print('|          Opções:           |')
@@ -19,13 +19,13 @@ def menu_jornalista(usuario, materias):
         opcao = input('Digite uma opção: ')
 
         if (opcao == '1'):
-            escrever_materia(usuario)
-        if (opcao == '2'):
-            listar_noticias(materias)
+            escrever_materia(emailusuario, materias, idmateria)
+        elif (opcao == '2'):
+            listar_noticias(emailusuario, materias)
         elif (opcao == '3'):
-            excluir_materia()
+            excluir_materia(emailusuario, materias)
         elif (opcao == '4'):
-            editar_materia()
+            editar_materia(emailusuario, materias)
         elif (opcao == '5'):
             print('Saindo do sistema')
             break
@@ -33,15 +33,7 @@ def menu_jornalista(usuario, materias):
             print('Opção inválida. Selecione novamente')
 
 
-def editar_materia(usuario_logado):
-    global id_materia
-
-    if usuario_logado['tipo'] != TIPO_JORNALISTA:
-        print('Você não tem permissão para editar matérias. ')
-        return
-    if len(materias) == 0:
-        print('Não há matérias disponíveis para editar. ')
-        return
+def editar_materia(emailusuario, materias):
 
     listar_noticias(materias)  # Mostra a lista de notícias para que o usuário veja os IDs
     id_a_editar = input('Qual id da matéria a ser editada: ')
@@ -54,13 +46,7 @@ def editar_materia(usuario_logado):
 
     # Procura a matéria com base no ID
     for materia in materias:
-        if materia['id'] == id_a_editar:
-            if usuario_logado['email'] == materia['autor']:
-                materias.remove(materia)
-                print(f'Noticia com ID {id_a_editar} excluida com sucesso.')
-            else:
-                print('Apenas os autores tem permissão para fazer edições')
-            return
+        if materia['id'] == id_a_editar and emailusuario == materia['autor']:
 
             print(f'Editando matéria com ID {id_a_editar} .')
             novo_titulo = input('Digite o novo título: ')
@@ -72,37 +58,37 @@ def editar_materia(usuario_logado):
             materia['data'] = nova_data
 
             print(f'Matéria com ID {id_a_editar} editada com sucesso.')
-            return
-    print(f'Matéria com ID {id_a_editar} não encontrada')
+            break
+    else:
+        print(f'Matéria com ID {id_a_editar} não encontrada')
 
 
-def listar_noticias(materias):
+def listar_noticias(emailusuario, materias):
     if len(materias) == 0:
         print('Não há matérias disponíveis no momento')
     else:
         print('Lista de matérias:')
         for materia in materias:
-            print('-' * 40)
-            print(f"ID: {materia['id']}")
-            print(f"Título: {materia['titulo']}")
-            print(f"Autor: {materia['autor']}")
-            print(f"Data: {materia['data']}")
-            print(f"Conteúdo: {materia['conteudo']}")
+            if(materia['autor'] == emailusuario):
 
-            # Verifica se há comentários na matéria
-            if 'comentarios' in materia and len(materia['comentarios']) > 0:
                 print('-' * 40)
-                print('Comentários:')
-                for comentario in materia['comentarios']:
-                    print(f'Usuário: {comentario["usuario"]}')
-                    print(f'Comentário: {comentario["comentario"]}')
-                    print('-' * 40)
+                print(f"ID: {materia['id']}")
+                print(f"Título: {materia['titulo']}")
+                print(f"Autor: {materia['autor']}")
+                print(f"Data: {materia['data']}")
+                print(f"Conteúdo: {materia['conteudo']}")
 
-            if 'curtidas' in materia:
-                print(f'Curtidas: {materia["curtidas"]}')
 
-            print('-' * 40)
+def exibirComentariosNoticia(emailusuario, materias):
+    listar_noticias(emailusuario, materias)
 
+    idnoticia = int(input('digite o ID da materia que voce quer exibir os comentarios'))
+
+    for i in range(len(materias)):
+        if materias[i]['id'] == idnoticia:
+            for comentario in materias[i]['comentarios']:
+                print(comentario)
+                #alterar conforme a estrutura da funcao que adiciona comentarios
 
 
 
@@ -110,34 +96,32 @@ def listar_noticias(materias):
 
 
 #---------------------------------OK-----------------------------------
-def escrever_materia(usuario):
+def escrever_materia(email, materias, idmateria):
+    titulo = input('Digite o titulo da matéria: ')
+    conteudo = input('Digite o texto: ')
+    data_materia = '{}/{}/{}'.format(data_atual.day, data_atual.month, data_atual.year)
 
-    if usuario['tipo'] == TIPO_JORNALISTA:
-        titulo = input('Digite o titulo da matéria: ')
-        conteudo = input('Digite o texto: ')
-        data_materia = '{}/{}/{}'.format(data_atual.day, data_atual.month,data_atual.year)
+    idmateria[0] = idmateria[0] + 1
+    materia = {
+        'id': idmateria[0],
+        'titulo': titulo,
+        'conteudo': conteudo,
+        'data': data_materia,
+        'autor': email,
+        'comentarios': [],
+        'curtidas': 0
+    }
 
-        materia = {
-            'id': id_materia,
-            'titulo': titulo,
-            'conteudo': conteudo,
-            'data': data_materia,
-            'autor': usuario['nome']
-        }
-        id_materia += 1
-
-        materias.append(materia)
-        print('Matéria escrita com sucesso!')
-    else:
-        print('Você não tem permissão para escrever matéria')
+    materias.append(materia)
+    print('Matéria escrita com sucesso!')
 
 
-def excluir_materia(usuario_logado):
+def excluir_materia(emailusuario, materias):
     if len(materias) == 0:
         print('Não há matérias disponíveis para excluir.')
         return
 
-    listar_noticias(materias)
+    listar_noticias(emailusuario, materias)
     id_a_excluir = input('Digite o ID da notícia: ')
 
     # Verifica se o ID é um número válido
@@ -149,7 +133,7 @@ def excluir_materia(usuario_logado):
     # Procura a notícia com base no ID
     for materia in materias:
         if materia['id'] == id_a_excluir:
-            if usuario_logado['email'] == materia['autor']:
+            if emailusuario == materia['autor']:
                 materias.remove(materia)
                 print(f'Noticia com ID {id_a_excluir} excluida com sucesso.')
             else:

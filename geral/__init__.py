@@ -1,12 +1,12 @@
 from jornalista import *
 from leitor import *
 
-usuarios_cadastrados = []
+
 TIPO_JORNALISTA = "jornalista"
 TIPO_LEITOR = "leitor"
 
 
-def fazer_login(materias):
+def fazer_login(usuarios_cadastrados, materias, idmateria):
     email = input('Email: ')
     senha = input('Senha: ')
 
@@ -14,21 +14,13 @@ def fazer_login(materias):
         if (usuario['email'] == email and usuario['senha'] == senha):
 
             if (usuario['tipo'] == TIPO_JORNALISTA):
-                menu_jornalista(email, materias)
+                menu_jornalista(email, materias, idmateria)
 
             elif (usuario['tipo'] == TIPO_LEITOR):
                 menu_leitor()
 
             else:
                 print('Credenciais inválidas')
-
-
-
-
-
-
-
-
 
 
 
